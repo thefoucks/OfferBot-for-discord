@@ -1,8 +1,18 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
+import os
+import json
 
-# טען מפתח שירות JSON
-cred = credentials.Certificate("C:/Users/segev/OneDrive/שולחן העבודה/VS/OfferBot/serviceAccountKey.json")
+# טען את קונפיג Firebase מ-environment variable
+firebase_config = os.getenv('FIREBASE_CONFIG_JSON')
+if not firebase_config:
+    raise ValueError("FIREBASE_CONFIG_JSON environment variable is missing")
+
+# המר את ה-JSON string ל-dict
+config_dict = json.loads(firebase_config)
+
+# אתחול Firebase עם ה-config מהמשתנה
+cred = credentials.Certificate(config_dict)
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
