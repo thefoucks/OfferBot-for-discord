@@ -1,0 +1,14 @@
+[build]
+base_image = "ubuntu-22.04"
+
+[phases.setup]
+nix_pkgs = ["python3", "python3-venv", "gcc"]
+
+[phases.install]
+commands = [
+    "python -m venv /opt/venv",
+    ". /opt/venv/bin/activate && pip install -r requirements.txt"
+]
+
+[start]
+cmd = "python offerbot.py"
