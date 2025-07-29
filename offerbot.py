@@ -4,6 +4,7 @@ from discord.ext import commands
 from discord.ui import View, Button
 from firebase_utils import db
 import asyncio
+import os
 
 from firebase_utils import (
     save_channel, get_channel,
@@ -299,7 +300,11 @@ async def remove_bot_command(interaction: Interaction):
 
 
 
+# ===================== Run the bot =====================
+
+TOKEN = os.environ.get("DISCORD_TOKEN")
+if not TOKEN:
+    raise ValueError("DISCORD_TOKEN not found")
 
 
-
-bot.run(your_token)
+bot.run(TOKEN)
